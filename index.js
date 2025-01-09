@@ -108,7 +108,7 @@ function filterUnfundedOnly() {
     deleteChildElements(gamesContainer);
 
     // use filter() to get a list of games that have not yet met their goal
-    let unfundedGames = GAMES_JSON.filter(game => {
+    const unfundedGames = GAMES_JSON.filter(game => {
         return game.pledged < game.goal;
     });
     console.log(unfundedGames)
@@ -121,7 +121,7 @@ function filterFundedOnly() {
     deleteChildElements(gamesContainer);
     
     // use filter() to get a list of games that have met or exceeded their goal
-    let fundedGames = GAMES_JSON.filter(game => {
+    const fundedGames = GAMES_JSON.filter(game => {
         return game.pledged >= game.goal;
     })
     console.log(fundedGames)
@@ -156,13 +156,17 @@ allBtn.addEventListener("click", showAllGames);
 const descriptionContainer = document.getElementById("description-container");
 
 // use filter or reduce to count the number of unfunded games
-
+const unfundedGames = GAMES_JSON.filter(game => {
+    return game.pledged < game.goal;
+});
 
 // create a string that explains the number of unfunded games using the ternary operator
-
+const unfundedGamesString = unfundedGames.length === 0 ? "All games are funded thank you!" : `We have raised $${totalRaised.toLocaleString()} but there are ${unfundedGames.length} games that still need funding!`;
 
 // create a new DOM element containing the template string and append it to the description container
-
+const unfundedGamesElement = document.createElement("p");
+unfundedGamesElement.innerHTML = unfundedGamesString;
+descriptionContainer.appendChild(unfundedGamesElement);
 /************************************************************************************
  * Challenge 7: Select & display the top 2 games
  * Skills used: spread operator, destructuring, template literals, sort 
